@@ -6,7 +6,7 @@
 #    By: eferrand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/18 22:08:18 by eferrand          #+#    #+#              #
-#    Updated: 2017/01/31 22:02:12 by eferrand         ###   ########.fr        #
+#    Updated: 2017/05/04 06:44:42 by eferrand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,8 @@ FILE_LIST	:=	ft_memset.c		\
 				ft_lstmap.c		\
 				ft_realloc.c	\
 				ft_power.c		\
-				ft_root.c
+				ft_root.c		\
+				ft_isletter.c
 
 OBJ_FILES	:=	$(addprefix $(OBJ_DIR)/,$(FILE_LIST:.c=.o))
 INCLUDES	:=	-I $(INC_DIR)
