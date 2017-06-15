@@ -6,7 +6,7 @@
 #    By: eferrand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/18 22:08:18 by eferrand          #+#    #+#              #
-#    Updated: 2017/06/15 14:15:09 by eferrand         ###   ########.fr        #
+#    Updated: 2017/06/15 15:56:37 by eferrand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,8 @@ FILE_LIST	:=	ft_memset.c					\
 				ft_point_ratio_to_quad.c	\
 				ft_create_quad.c			\
 				ft_point_change_quad.c		\
-				ft_exit.c
+				ft_exit.c					\
+				ft_atoi_hex.c
 
 OBJ_FILES	:=	$(addprefix $(OBJ_DIR)/,$(FILE_LIST:.c=.o))
 INCLUDES	:=	-I $(INC_DIR)
