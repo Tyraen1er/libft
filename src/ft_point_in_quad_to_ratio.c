@@ -6,13 +6,13 @@
 /*   By: eferrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/05 21:32:56 by eferrand          #+#    #+#             */
-/*   Updated: 2017/06/05 21:34:38 by eferrand         ###   ########.fr       */
+/*   Updated: 2017/06/15 14:21:37 by eferrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_point ft_point_in_quad_to_ratio(t_quad quad, t_point point)
+t_point	ft_point_in_quad_to_ratio(t_quad quad, t_point point)
 {
 	t_point	ratio;
 
