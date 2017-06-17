@@ -14,9 +14,7 @@
 
 t_point	ft_point_ratio_to_quad(t_point ratio, t_quad quad)
 {
-	t_point	point;
-
-	ratio.x = point.x * (quad.br.x - quad.tl.x) + quad.tl.x;
-	ratio.y = point.y * (quad.br.y - quad.tl.y) + quad.tl.y;
+	ratio.x = ratio.x * (quad.br.x - quad.tl.x) + quad.tl.x;
+	ratio.y = ratio.y * (quad.br.y - quad.tl.y) + quad.tl.y;
 	return (ratio);
 }
