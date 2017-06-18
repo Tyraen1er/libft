@@ -6,7 +6,7 @@
 /*   By: eferrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/15 16:53:25 by eferrand          #+#    #+#             */
-/*   Updated: 2017/06/15 18:55:10 by eferrand         ###   ########.fr       */
+/*   Updated: 2017/06/18 23:28:28 by eferrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		ft_load_bitmap(int fd, t_bmp *bmp)
 {
 	int	a;
 
-	printf("%d\n", sizeof(*bmp));
+	printf("bmo = %lu\nheader = %lu\ninfo = %lu\n", sizeof(*bmp), sizeof(bmp->header), sizeof(bmp->info));
 /*	if (!((file[0] == 'B' && file[1] == 'M') ||
 				(file[0] == 'B' && file[1] == 'A') ||
 				(file[0] == 'C' && file[1] == 'I') ||
@@ -74,17 +74,11 @@ int		main(int argc, char **argv)
 	int		fd;
 	t_bmp	picture;
 
-	file = ft_memalloc(1);
-	if (argc != 2)
-	{
-		ft_putstr("usage: ./fdf fichier_file\n");
-		return (0);
-	}
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 	{
 		printf("impossible d open\n");
 		return (0);
 	}
-	ft_load_bitmap(file, &picture);
+	ft_load_bitmap(fd, &picture);
 	return (0);
 }
