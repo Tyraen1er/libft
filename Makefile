@@ -84,7 +84,9 @@ FILE_LIST	:=	ft_memset.c					\
 				ft_point_change_quad.c		\
 				ft_exit.c					\
 				ft_atoi_hex.c				\
-				ft_memjoin.c
+				ft_memjoin.c				\
+				ft_read_all.c				\
+				ft_read_allstr.c
 
 OBJ_FILES	:=	$(addprefix $(OBJ_DIR)/,$(FILE_LIST:.c=.o))
 INCLUDES	:=	-I $(INC_DIR)

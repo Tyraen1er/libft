@@ -15,6 +15,7 @@
 
 # include <string.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include <unistd.h>
 
 typedef	struct		s_list
@@ -43,7 +44,9 @@ typedef struct		s_quad
 	t_point			br;
 }					t_quad;
 
+int					ft_read_allstr(int fd, void **file);
 void				ft_exit(int error);
+int					ft_read_all(int fd, void **datafile);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);

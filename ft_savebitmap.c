@@ -19,6 +19,7 @@ typedef struct			s_header_file_bmp
 {
 	short				bf_type;
 	int					bf_size;
+	int					reserved;
 	int					bf_offset;
 }						t_header_file_bmp;
 
@@ -35,46 +36,42 @@ typedef struct			s_info_bmp
 	int					v_pixel_per_meter;
 	int					nb_color_used;
 	int					nb_color_important;
-	int					*palette;
 }						t_info_bmp;
 
 typedef struct			s_bmp
 {
 	t_header_file_bmp	header;
-	t_info_bmp	info;
+	t_info_bmp			info;
+	int					*palette;
 	char				*picture;
 }						t_bmp;
 
-int		ft_save_bitmap(char *file, t_bmp *bmp)
+int		ft_load_bitmap(int fd, t_bmp *bmp)
 {
 	int	a;
 
-	if (!((file[0] == 'B' && file[1] == 'M') ||
+	printf("%d\n", sizeof(*bmp));
+/*	if (!((file[0] == 'B' && file[1] == 'M') ||
 				(file[0] == 'B' && file[1] == 'A') ||
 				(file[0] == 'C' && file[1] == 'I') ||
 				(file[0] == 'C' && file[1] == 'P') ||
 				(file[0] == 'I' && file[1] == 'C') ||
 				(file[0] == 'P' && file[1] == 'T')))
-		return (0);
-	else
-		bmp->header.bf_type = *((short*)file);
-	printf("%x\n%x\n", (*((int*)&file[2]) & 0xFFFFFFFF), *((int*)&file[10]) & 0xFFFFFFFF);
-/*	write(1, &bmp->header.bf_type, 2);
-	ft_putstr("\ntaille fichier : ");
-	bmp->header.bf_size = *((int*)(file + 2));
-	ft_putnbr((int)(bmp->header.bf_size));
-	bmp->header.bf_offset = *((int*)(file + 10));
-	ft_putstr("\noffset : ");
-	ft_putnbr(bmp->header.bf_offset);
+		return (-1);
+	bmp->header.bf_type = *((short*)file);
+	bmp->header.bf_size = *((int*)&(file + 2));
+	bmp->header.bf_offset = *((int*)&(file + 10));
+	bmp->info.info_size = *((int*)&(file + 14));
+	bmp->info.width = *((int*)&(file + 18));
+	bmp->info.height = *((int*)&(file + 22));
+	bmp->header.nb_planes = *((short*)&(file + 26));
+	bmp->header.bits_per_pixel = *((short*)&(file + 28));
 */	return (0);
 }
 
 int		main(int argc, char **argv)
 {
-	int		fd_rd[2];
-	char	buf[151];
-	char	*file;
-	char	*tmp;
+	int		fd;
 	t_bmp	picture;
 
 	file = ft_memalloc(1);
@@ -83,21 +80,11 @@ int		main(int argc, char **argv)
 		ft_putstr("usage: ./fdf fichier_file\n");
 		return (0);
 	}
-	if ((fd_rd[0] = open(argv[1], O_RDONLY)) == -1)
+	if ((fd = open(argv[1], O_RDONLY)) == -1)
 	{
 		printf("impossible d open\n");
 		return (0);
 	}
-	while ((fd_rd[1] = read(fd_rd[0], buf, 150)) && fd_rd[1] != -1)
-	{
-		buf[fd_rd[1]] = 0;
-		tmp = ft_strjoin(file, buf);
-		ft_memdel((void *)&file);
-		file = tmp;
-	}
-	if (fd_rd[1] == -1 || !tmp)
-		ft_putstr("error read or display\n");
-	if (!ft_save_bitmap(file, &picture))
-		ft_putstr("\nTout semble OK patron\n");
+	ft_load_bitmap(file, &picture);
 	return (0);
 }

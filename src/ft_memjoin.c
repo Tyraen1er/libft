@@ -4,18 +4,18 @@ void	*ft_memjoin(void *str1, int a, void *str2, int b)
 {
 	char	*ret;
 
-	if (!str1 || !str2)
+	if (!str1 && !str2)
 		return (NULL);
 	if (!(ret = (char *)malloc(a + b)))
 			return (NULL);
 	--b;
-	while (b + 1)
+	while (0 <= b)
 	{
 		ret[a + b] = ((char *)str2)[b];
 		--b;
 	}
 	--a;
-	while (a + 1)
+	while (0 <= a)
 	{
 		ret[a] = ((char *)str1)[a];
 		--a;
