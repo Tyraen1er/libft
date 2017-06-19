@@ -15,13 +15,13 @@
 #include <stdio.h>
 #include "libft.h"
 
-typedef struct			s_header_file_bmp
+typedef struct					s_header_file_bmp
 {
-	short				bf_type;
-	int					bf_size;
-	int					reserved;
-	int					bf_offset;
-}						t_header_file_bmp;
+	short						bf_type;
+	int							bf_size;
+	int							reserved;
+	int							bf_offset;
+}	__attribute((packed))		t_header_file_bmp;
 
 typedef struct			s_info_bmp
 {
@@ -48,15 +48,24 @@ typedef struct			s_bmp
 
 int		ft_load_bitmap(int fd, t_bmp *bmp)
 {
-	int	a;
+	int		ab ;
+	char	buf[200];
 
-	printf("bmo = %lu\nheader = %lu\ninfo = %lu\n", sizeof(*bmp), sizeof(bmp->header), sizeof(bmp->info));
-/*	if (!((file[0] == 'B' && file[1] == 'M') ||
-				(file[0] == 'B' && file[1] == 'A') ||
-				(file[0] == 'C' && file[1] == 'I') ||
-				(file[0] == 'C' && file[1] == 'P') ||
-				(file[0] == 'I' && file[1] == 'C') ||
-				(file[0] == 'P' && file[1] == 'T')))
+	printf("bmp = %lu\nheader = %lu\ninfo = %lu\n\n", sizeof(*bmp), sizeof(bmp->header), sizeof(bmp->info));
+	if ((read(fd, (char*)&(bmp->header), 14)) != 14 || (bmp->header.bf_type !=
+		0x4D42 && bmp->header.bf_type != 0x4142) && bmp->header.bf_type !=
+		0x4943 && bmp->header.bf_type != 0x5043 && bmp->header.bf_type !=
+		0x4349 && bmp->header.bf_type != 0x5450)
+		return (-1);
+	
+	read(fd, (char*)&(bmp->info), 40);
+/*
+	if (!((file[0] == 'B' && file[1] == 'M') ||
+		(file[0] == 'B' && file[1] == 'A') ||
+		(file[0] == 'C' && file[1] == 'I') ||
+		(file[0] == 'C' && file[1] == 'P') ||
+		(file[0] == 'I' && file[1] == 'C') ||
+		(file[0] == 'P' && file[1] == 'T')))
 		return (-1);
 	bmp->header.bf_type = *((short*)file);
 	bmp->header.bf_size = *((int*)&(file + 2));
@@ -66,7 +75,8 @@ int		ft_load_bitmap(int fd, t_bmp *bmp)
 	bmp->info.height = *((int*)&(file + 22));
 	bmp->header.nb_planes = *((short*)&(file + 26));
 	bmp->header.bits_per_pixel = *((short*)&(file + 28));
-*/	return (0);
+*/
+	return (0);
 }
 
 int		main(int argc, char **argv)
@@ -79,6 +89,7 @@ int		main(int argc, char **argv)
 		printf("impossible d open\n");
 		return (0);
 	}
-	ft_load_bitmap(fd, &picture);
+	if (-1 == ft_load_bitmap(fd, &picture))
+		ft_putstr("aie aie aie\n");
 	return (0);
 }
