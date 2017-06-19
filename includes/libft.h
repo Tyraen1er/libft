@@ -6,7 +6,7 @@
 /*   By: eferrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 22:21:24 by eferrand          #+#    #+#             */
-/*   Updated: 2017/06/15 15:56:11 by eferrand         ###   ########.fr       */
+/*   Updated: 2017/06/19 20:20:56 by eferrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <stdio.h>
 
 typedef	struct		s_list
 {
