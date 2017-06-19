@@ -6,11 +6,12 @@
 /*   By: eferrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/15 16:53:25 by eferrand          #+#    #+#             */
-/*   Updated: 2017/06/19 19:56:56 by eferrand         ###   ########.fr       */
+/*   Updated: 2017/06/19 22:49:56 by eferrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "mlx.h"
 
 typedef struct					s_header_file_bmp
 {
@@ -72,6 +73,40 @@ int		ft_load_bitmap(int fd, t_bmp *bmp)
 	return (0);
 }
 
+int		ft_display(t_bmp pic)
+{
+	void	*mlx[4];
+	int		bpp;
+	int		s_l;
+	int		endian;
+	int		a;
+	int		b;
+
+	a = 0;
+	b = 0;
+	bpp = 0;
+	s_l = 0;
+	endian = 0;
+	if (!(mlx[0] = mlx_init()) ||
+			!(mlx[1] = mlx_new_window(mlx[0], pic.info.width, pic.info.height, "fractal 42")) ||
+			!(mlx[2] = mlx_new_image(mlx[0], pic.info.width, pic.info.height)) ||
+			!(mlx[3] =
+				(void*)mlx_get_data_addr(mlx[2], &(bpp), &(s_l), &(endian))))
+		exit(3);
+	while(b < pic.info.pic_size)
+	{
+		if ((a + 1) % 4)
+		{
+			((char*)mlx[3])[a] = pic.picture[b];
+			++b;
+		}
+		++a;
+	}
+	mlx_put_image_to_window(mlx[0], mlx[1], mlx[2], 0, 0);
+	mlx_loop(mlx[0]);
+	return (0);
+}
+
 int		main(int argc, char **argv)
 {
 	int		fd;
@@ -80,6 +115,11 @@ int		main(int argc, char **argv)
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		return (0);
 	if (-1 == ft_load_bitmap(fd, &picture))
+	{
 		ft_putstr("aie aie aie\n");
+		return (0);
+	}
+	printf("width = %d\nheight = %d\n", picture.info.width, picture.info.height);
+	ft_display(picture);
 	return (0);
 }
