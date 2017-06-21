@@ -48,25 +48,27 @@ t_bmp	ft_uncompress_bitmap(t_bmp old)
 {
 	t_bmp	new;
 	int		a;
-	int		b;
+	int		pos;
+	int		offset;
+	long	mask;
 
 	a = 0;
-	b = 0;
+	pos = 0;
+	offset = 0;
+	mask = 0xFFFFFFFFFFFFFFFF;
 	new = old;
 	new.info.compression = 0;
 	new.palette = NULL;
 	new.picture = (char*)malloc(old.info.width * old.info.height * 3);
 	while (a < old.info.width * old.info.height)
 	{
-//		if (old.info.bits_per_pixel == 8)
-		new.picture[3 * a] = old.palette[old.picture[b++]] & 0xFFFFFF;
-/*		else
+		while (8 <= pos)
 		{
-			new.picture[a] = old.palette[old.picture[b]] & 0xF0;
-			a += 3;
-			new.picture[a] = old.palette[old.picture[b]] & 0xF;
+			++a;
+			pos -= 8;
 		}
-*/		a += 3;
+		pos += old.info.bits_per_pixel;
+		*((long*)old.picture) & (mask >> offset);
 	}
 	return (new);
 }
