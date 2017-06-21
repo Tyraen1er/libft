@@ -6,7 +6,7 @@
 /*   By: eferrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/15 16:53:25 by eferrand          #+#    #+#             */
-/*   Updated: 2017/06/19 22:49:56 by eferrand         ###   ########.fr       */
+/*   Updated: 2017/06/20 17:49:39 by eferrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,56 @@ typedef struct					s_bmp
 	char						*picture;
 }								t_bmp;
 
+t_bmp	ft_uncompress_bitmap(t_bmp old)
+{
+	t_bmp	new;
+	int		a;
+	int		b;
+
+	a = 0;
+	b = 0;
+	new = old;
+	new.info.compression = 0;
+	new.palette = NULL;
+	new.picture = (char*)malloc(old.info.width * old.info.height * 3);
+	while (a < old.info.width * old.info.height)
+	{
+//		if (old.info.bits_per_pixel == 8)
+		new.picture[3 * a] = old.palette[old.picture[b++]] & 0xFFFFFF;
+/*		else
+		{
+			new.picture[a] = old.palette[old.picture[b]] & 0xF0;
+			a += 3;
+			new.picture[a] = old.palette[old.picture[b]] & 0xF;
+		}
+*/		a += 3;
+	}
+	return (new);
+}
+
 int		ft_load_bitmap(int fd, t_bmp *bmp)
 {
 	char	buf[40];
-	int		rd;
 
-	if ((rd = read(fd, (char*)&(bmp->header), 14)) != 14 ||
+	if (read(fd, (char*)&(bmp->header), 14) != 14 ||
 					(bmp->header.bf_type !=
 			0x4D42 && bmp->header.bf_type != 0x4142 && bmp->header.bf_type !=
 			0x4943 && bmp->header.bf_type != 0x5043 && bmp->header.bf_type !=
 			0x4349 && bmp->header.bf_type != 0x5450) ||
-				(rd = read(fd, (char*)&(bmp->info), 40)) != 40 ||
+				read(fd, (char*)&(bmp->info), 40) != 40 ||
 			bmp->info.info_size != 40 || bmp->info.nb_planes != 1)
-		return (-1);                                       
-	if (bmp->info.bits_per_pixel <= 8)
+		return (-1);
+	if (bmp->info.compression)
 	{
 		bmp->palette = (int*)malloc(sizeof(int) * bmp->info.nb_color_used);
-		if (-1 == (rd = read(fd ,(char*)bmp->palette,
-				bmp->info.nb_color_used * 4)))
+		if (-1 == read(fd ,(char*)bmp->palette, bmp->info.nb_color_used * 4) ||
+				-1 == ft_read_all(fd, (void*)&bmp->picture))
 			return (-1);
-	}
-	else
-		bmp->palette = NULL;
-	if (bmp->info.pic_size != ft_read_all(fd, (void*)&bmp->picture))
-		return (-1);
-	if (bmp->info.bits_per_pixel <= 8)
 		return (1);
+	}
+	bmp->palette = NULL;
+	if (-1 == ft_read_all(fd, (void*)&bmp->picture))
+		return (-1);
 	return (0);
 }
 
@@ -88,10 +112,10 @@ int		ft_display(t_bmp pic)
 	s_l = 0;
 	endian = 0;
 	if (!(mlx[0] = mlx_init()) ||
-			!(mlx[1] = mlx_new_window(mlx[0], pic.info.width, pic.info.height, "fractal 42")) ||
-			!(mlx[2] = mlx_new_image(mlx[0], pic.info.width, pic.info.height)) ||
-			!(mlx[3] =
-				(void*)mlx_get_data_addr(mlx[2], &(bpp), &(s_l), &(endian))))
+		!(mlx[1] = mlx_new_window(mlx[0], pic.info.width, pic.info.height, "fractal 42")) ||
+		!(mlx[2] = mlx_new_image(mlx[0], pic.info.width, pic.info.height)) ||
+		!(mlx[3] =
+			(void*)mlx_get_data_addr(mlx[2], &(bpp), &(s_l), &(endian))))
 		exit(3);
 	while(b < pic.info.pic_size)
 	{
@@ -100,6 +124,8 @@ int		ft_display(t_bmp pic)
 			((char*)mlx[3])[a] = pic.picture[b];
 			++b;
 		}
+		else
+			((char*)mlx[3])[a] = 0;
 		++a;
 	}
 	mlx_put_image_to_window(mlx[0], mlx[1], mlx[2], 0, 0);
@@ -119,7 +145,15 @@ int		main(int argc, char **argv)
 		ft_putstr("aie aie aie\n");
 		return (0);
 	}
-	printf("width = %d\nheight = %d\n", picture.info.width, picture.info.height);
+		printf("____________HEADER D INFORMATIONS____________\nnombre de bits par pixel = %d\ntaille de compression = %d\n", picture.info.bits_per_pixel, picture.info.compression);
+	printf("nombre de couleurs importantes = %d\n", picture.info.nb_color_important);
+	if (picture.info.bits_per_pixel < 24)
+	{
+		printf("CETTE IMAGE EST COMPRESSEE !\n");
+		picture = ft_uncompress_bitmap(picture);
+		ft_display(picture);
+		return (0);
+	}
 	ft_display(picture);
 	return (0);
 }
