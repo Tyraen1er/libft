@@ -53,22 +53,28 @@ t_bmp	ft_uncompress_bitmap(t_bmp old)
 	long	mask;
 
 	a = 0;
-	pos = 0;
+	pos = 1;
 	offset = 0;
 	mask = 0xFFFFFFFFFFFFFFFF;
 	new = old;
 	new.info.compression = 0;
 	new.palette = NULL;
 	new.picture = (char*)malloc(old.info.width * old.info.height * 3);
+//	boucle until char * end
 	while (a < old.info.width * old.info.height)
 	{
+	//	boucle until octet end
 		while (8 <= pos)
 		{
 			++a;
 			pos -= 8;
 		}
-		pos += old.info.bits_per_pixel;
-		*((long*)old.picture) & (mask >> offset);
+		if (a < old.info.width * old.info.height)
+		{
+			if (8 < pos + old.info.bits_per_pixel)
+				pos += old.info.bits_per_pixel;
+		}
+		*((long*)old.picture) & (mask << offset);
 	}
 	return (new);
 }
@@ -114,7 +120,8 @@ int		ft_display(t_bmp pic)
 	s_l = 0;
 	endian = 0;
 	if (!(mlx[0] = mlx_init()) ||
-		!(mlx[1] = mlx_new_window(mlx[0], pic.info.width, pic.info.height, "fractal 42")) ||
+		!(mlx[1] = mlx_new_window(mlx[0], pic.info.width, pic.info.height,
+				"fichier bitmap")) ||
 		!(mlx[2] = mlx_new_image(mlx[0], pic.info.width, pic.info.height)) ||
 		!(mlx[3] =
 			(void*)mlx_get_data_addr(mlx[2], &(bpp), &(s_l), &(endian))))
