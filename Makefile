@@ -86,7 +86,10 @@ FILE_LIST	:=	ft_memset.c					\
 				ft_atoi_hex.c				\
 				ft_memjoin.c				\
 				ft_read_all.c				\
-				ft_read_allstr.c
+				ft_read_allstr.c			\
+				ft_read_bits.c				\
+				ft_uncompress_bitmap.c		\
+				ft_load_bitmap.c
 
 OBJ_FILES	:=	$(addprefix $(OBJ_DIR)/,$(FILE_LIST:.c=.o))
 INCLUDES	:=	-I $(INC_DIR)
