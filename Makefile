@@ -12,8 +12,8 @@
 
 NAME		:=	libft.a
 
-SRC_DIR		:=	./src
-OBJ_DIR		:=	./obj
+SRC_DIR		:=	./srcs
+OBJ_DIR		:=	./objs
 INC_DIR		:=	./includes
 
 FILE_LIST	:=	ft_memset.c					\
