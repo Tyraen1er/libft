@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <ctype.h>
 
 
 
@@ -185,6 +186,7 @@ t_quad							ft_create_quad(t_point a, t_point b);
 t_point							ft_point_change_quad(t_point a, t_quad b,
 		t_quad c);
 char							*ft_strndup(const char *str, size_t n);
+void							ft_str_tolower(char *str);
 
 
 #endif
