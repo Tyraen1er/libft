@@ -90,6 +90,17 @@ typedef struct					s_bmp
 	unsigned char				*picture;
 }								t_bmp;
 
+typedef struct					s_str
+{
+	char						*str;
+	int							*(*strlen)();
+	void						*(*lower)();
+	void						*(*upper)();
+	char						*(*stradd)(char *);
+	char						*(*addstr)(char *);
+}								t_str;
+
+t_str							init_str(char *str);
 int								ft_load_bitmap(int fd, t_bmp *bmp);
 t_bmp							ft_uncompress_bitmap(t_bmp old);
 int								*ft_read_bits(unsigned char *comp, int buf,
