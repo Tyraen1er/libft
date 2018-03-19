@@ -6,7 +6,7 @@
 /*   By: eferrand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 22:21:24 by eferrand          #+#    #+#             */
-/*   Updated: 2018/02/12 15:22:14 by eferrand         ###   ########.fr       */
+/*   Updated: 2018/03/19 14:38:09 by eferrand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <ctype.h>
-
-
 
 typedef struct					s_fdline
 {
@@ -89,23 +87,6 @@ typedef struct					s_bmp
 	unsigned int				*palette;
 	unsigned char				*picture;
 }								t_bmp;
-
-typedef struct					s_str
-{
-	char						**str;
-	t_str						*addr;
-	int							*(*strlen)();
-	void						*(*lower)();
-	void						*(*upper)();
-	char						*(*stradd)(char *);
-	char						*(*addstr)(char *);
-	void						(*print)();
-}								t_str;
-
-void							*ft_str_add(char **str, char *add);
-void							*ft_add_str(char *add, char **str);
-t_str							ft_init_str(char *str);
-
 
 int								ft_load_bitmap(int fd, t_bmp *bmp);
 t_bmp							ft_uncompress_bitmap(t_bmp old);
@@ -203,7 +184,5 @@ t_quad							ft_create_quad(t_point a, t_point b);
 t_point							ft_point_change_quad(t_point a, t_quad b,
 		t_quad c);
 char							*ft_strndup(const char *str, size_t n);
-void							ft_str_tolower(char *str);
-
 
 #endif
