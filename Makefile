@@ -13,6 +13,8 @@
 NAME		:=	libft.a
 
 SRC_DIR		:=	./srcs
+SRC_FT		:=	$(SRC_DIR)/ft
+SRC_STR		:=	$(SRC_DIR)/str__
 OBJ_DIR		:=	./objs
 INC_DIR		:=	./includes
 
@@ -90,9 +92,8 @@ FILE_LIST	:=	ft_memset.c					\
 				ft_read_bits.c				\
 				ft_uncompress_bitmap.c		\
 				ft_load_bitmap.c			\
-				get_next_line.c				\
-				ft_strndup.c				\
-				ft_str_tolower.c
+				ft_get_next_line.c			\
+				ft_strndup.c				
 
 OBJ_FILES	:=	$(addprefix $(OBJ_DIR)/,$(FILE_LIST:.c=.o))
 INCLUDES	:=	-I $(INC_DIR)
@@ -108,8 +109,8 @@ $(NAME): $(OBJ_FILES)
 	ar rc $(NAME) $(OBJ_FILES)
 	ranlib $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_FT)/%.c #$(SRC_STR)/%.c
+	$(CC) $(CFLAGS) -c $< $(INCLUDES) -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)
