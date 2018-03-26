@@ -17,13 +17,13 @@
 typedef struct					s_str
 {
 	char						*str;
-	t_str						*addr;
-	const int					(*strlen)();
-	const void					(*lower)();
-	const void					(*upper)();
-	const char					(*stradd)(char *);
-	const char					(*addstr)(char *);
-	const void					(*print)();
+	struct s_str				*addr;
+	int							(*strlen)();
+	void						(*lower)();
+	void						(*upper)();
+	char						(*stradd)(char *);
+	char						(*addstr)(char *);
+	void						(*print)();
 }								t_str;
 
 t_str							str__init_str();

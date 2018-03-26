@@ -1,4 +1,4 @@
-#include "libft.h"
+#include "t_str.h"
 
 void	ft_str_upper(char *str)
 {

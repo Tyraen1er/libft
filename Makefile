@@ -18,7 +18,14 @@ SRC_STR		:=	$(SRC_DIR)/str__
 OBJ_DIR		:=	./objs
 INC_DIR		:=	./includes
 
-FILE_LIST	:=	ft_memset.c					\
+FILE_STR	:=	str__add_str.c	\
+				str__new.c		\
+				str__str_add.c	\
+				str__lower.c	\
+				str__print.c	\
+				str__upper.c
+
+FILE_FT		:=	ft_memset.c					\
 				ft_bzero.c					\
 				ft_memcpy.c					\
 				ft_memccpy.c				\
@@ -95,6 +102,8 @@ FILE_LIST	:=	ft_memset.c					\
 				ft_get_next_line.c			\
 				ft_strndup.c				
 
+FILE_LIST	:=	$(FILE_STR) $(FILE_FT)
+
 OBJ_FILES	:=	$(addprefix $(OBJ_DIR)/,$(FILE_LIST:.c=.o))
 INCLUDES	:=	-I $(INC_DIR)
 CC			:=	gcc
@@ -109,7 +118,10 @@ $(NAME): $(OBJ_FILES)
 	ar rc $(NAME) $(OBJ_FILES)
 	ranlib $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_FT)/%.c #$(SRC_STR)/%.c
+$(OBJ_DIR)/%.o: $(SRC_FT)/%.c
+	$(CC) $(CFLAGS) -c $< $(INCLUDES) -o $@
+
+$(OBJ_DIR)/%.o: $(SRC_STR)/%.c
 	$(CC) $(CFLAGS) -c $< $(INCLUDES) -o $@
 
 clean:

@@ -1,4 +1,4 @@
-#include "libft.h"
+#include "t_str.h"
 
 void	ft_add_str(char *add, char **str)
 {
