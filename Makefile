@@ -18,12 +18,12 @@ SRC_STR		:=	$(SRC_DIR)/str__
 OBJ_DIR		:=	./objs
 INC_DIR		:=	./includes
 
-FILE_STR	:=	str__add_str.c	\
-				str__new.c		\
-				str__str_add.c	\
-				str__lower.c	\
-				str__print.c	\
-				str__upper.c
+#FILE_STR	:=	str__add_str.c	\
+#				str__new.c		\
+#				str__str_add.c	\
+#				str__lower.c	\
+#				str__print.c	\
+#				str__upper.c
 
 FILE_FT		:=	ft_memset.c					\
 				ft_bzero.c					\
