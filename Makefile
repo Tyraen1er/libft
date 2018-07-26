@@ -13,19 +13,11 @@
 NAME		:=	libft.a
 
 SRC_DIR		:=	./srcs
-SRC_FT		:=	$(SRC_DIR)/ft
-SRC_STR		:=	$(SRC_DIR)/str__
+SRC_FT		:=	$(SRC_DIR)
 OBJ_DIR		:=	./objs
 INC_DIR		:=	./includes
 
-#FILE_STR	:=	str__add_str.c	\
-#				str__new.c		\
-#				str__str_add.c	\
-#				str__lower.c	\
-#				str__print.c	\
-#				str__upper.c
-
-FILE_FT		:=	ft_memset.c					\
+FILES		:=	ft_memset.c					\
 				ft_bzero.c					\
 				ft_memcpy.c					\
 				ft_memccpy.c				\
@@ -100,11 +92,12 @@ FILE_FT		:=	ft_memset.c					\
 				ft_uncompress_bitmap.c		\
 				ft_load_bitmap.c			\
 				ft_get_next_line.c			\
-				ft_strndup.c				
+				ft_strndup.c				\
+				ft_str_lower.c				\
+				ft_str_upper.c
 
-FILE_LIST	:=	$(FILE_STR) $(FILE_FT)
 
-OBJ_FILES	:=	$(addprefix $(OBJ_DIR)/,$(FILE_LIST:.c=.o))
+OBJ_FILES	:=	$(addprefix $(OBJ_DIR)/,$(FILES:.c=.o))
 INCLUDES	:=	-I $(INC_DIR)
 CC			:=	gcc
 CFLAGS		:=	-Wall -Wextra -Werror
