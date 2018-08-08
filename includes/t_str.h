@@ -14,6 +14,15 @@
 # define T_STR
 # include "libft.h"
 
+typedef struct					s_this
+{
+	int							fd;
+	struct s_this				*next;
+	struct s_str				*_this;
+}								t_this;
+
+t_this	*allClasses;
+
 typedef struct					s_str
 {
 	char						*str;
@@ -26,7 +35,7 @@ typedef struct					s_str
 	void						(*print)();
 }								t_str;
 
-t_str							str__init_str();
+t_str							str__init_str(t_str *neo);
 void							str__lower();
 void							str__upper();
 void							str__str_add(char *add);
