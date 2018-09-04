@@ -16,7 +16,7 @@
 
 typedef struct					s_this
 {
-	int							fd;
+	int							id;
 	struct s_this				*next;
 	struct s_str				*_this;
 }								t_this;
@@ -35,12 +35,13 @@ typedef struct					s_str
 	void						(*print)();
 }								t_str;
 
-t_str							str__init_str(t_str *neo);
-void							str__lower();
-void							str__upper();
-void							str__str_add(char *add);
-void							str__add_str(char *add);
-void							str__print();
+t_str							init_str(t_str *neo);
+void							delete_str(t_str *old);
+void							str_lower();
+void							str_upper();
+void							str_add(char *add);
+void							add_str(char *add);
+void							str_print();
 
 /*
 ** replace carac / pattern
